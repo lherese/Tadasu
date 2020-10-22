@@ -6,10 +6,15 @@ extension FødselsnummerTests {
     //   `swift test --generate-linuxmain`
     // to regenerate.
     static let __allTests__FødselsnummerTests = [
+        ("testDate", testDate),
+        ("testFH_nummer", testFH_nummer),
         ("testIntegerLiteral", testIntegerLiteral),
         ("testKjønn", testKjønn),
         ("testLetters", testLetters),
         ("testNumberNormalisation", testNumberNormalisation),
+        ("testPersonnummer", testPersonnummer),
+        ("testRegistertype", testRegistertype),
+        ("testSerie", testSerie),
         ("testValidation", testValidation),
     ]
 }

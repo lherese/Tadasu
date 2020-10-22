@@ -11,7 +11,7 @@ extension Norway {
 
     let value: String
 
-    let weights = (
+    static let weights = (
       inner: [
         2, 5, 4, 9, 8, 1, 6, 7, 3
       ],
@@ -28,7 +28,7 @@ extension Norway {
         return false
       }
 
-      return MOD11(value, weights: weights.outer) && MOD11(value.prefix(10), weights: weights.inner)
+      return MOD11(value, weights: Self.weights.outer) && MOD11(value.prefix(10), weights: Self.weights.inner)
     }
 
     subscript(_ index: Int) -> Int {
@@ -73,12 +73,12 @@ public extension Norway.Fødselsnummer {
   }
 
   var registertype: Registertype {
-    if (4...7).contains(self[1]) {
+    if (8...9).contains(self[1]) {
+      return .FH_nummer
+    } else if (4...7).contains(self[1]) {
       return .D_nummer
     } else if (4...5).contains(self[3]) {
       return .H_nummer
-    } else if (8...9).contains(self[1]) {
-      return .FH_nummer
     } else {
       return .fødselsnummer
     }
@@ -173,6 +173,44 @@ extension Norway.Fødselsnummer {
     let day = String(self.day).padding(toLength: 2, withString: "0")
 
     return "\(fullYear)-\(month)-\(day)"
+  }
+
+}
+
+extension Norway.Fødselsnummer {
+
+  static func checksum(for number: String) -> String? {
+    let inner: String = MOD11(number, weights: weights.inner)
+
+    if inner.contains("-") {
+      return nil
+    }
+
+    let outer: String = MOD11(inner, weights: weights.outer)
+
+    if outer.contains("-") {
+      return nil
+    } else {
+      return outer
+    }
+  }
+
+  static func validFHNumber() -> String {
+    while true {
+      if let number = checksum(for: String((800000000...999999999).randomElement()!)) {
+        return number
+      }
+    }
+  }
+
+  public init() {
+    self.value = Self.validFHNumber()
+
+    guard
+      isValid
+    else {
+      preconditionFailure()
+    }
   }
 
 }

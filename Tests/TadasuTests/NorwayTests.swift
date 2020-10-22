@@ -63,4 +63,14 @@ final class FødselsnummerTests: XCTestCase {
     XCTAssertNil(Norway.Fødselsnummer(integerLiteral: 987654_32103).fødselsdato)
   }
 
+  func testFH_nummer() {
+    for _ in 1...1000 {
+      let fnummer = Norway.Fødselsnummer()
+
+      XCTAssertNil(fnummer.serie)
+      XCTAssertNil(fnummer.fødselsdato)
+      XCTAssertEqual(fnummer.registertype, .FH_nummer)
+    }
+  }
+
 }
