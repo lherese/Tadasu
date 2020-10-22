@@ -46,4 +46,21 @@ final class FødselsnummerTests: XCTestCase {
     XCTAssertEqual(Norway.Fødselsnummer(integerLiteral: 987654_32103).registertype,     .FH_nummer)
   }
 
+  func testSerie() {
+    XCTAssertEqual(Norway.Fødselsnummer(integerLiteral: 220177_72175).serie, .fra1854)
+    XCTAssertNil(Norway.Fødselsnummer(integerLiteral: 224177_72158).serie)
+  }
+
+  func testPersonnummer() {
+    XCTAssertEqual(Norway.Fødselsnummer(integerLiteral: 220177_72175).personnummer, 721)
+  }
+
+  func testDate() {
+    XCTAssertEqual(Norway.Fødselsnummer(integerLiteral: 220177_72175).fødselsdato, "1877-01-22")
+    XCTAssertEqual(Norway.Fødselsnummer(integerLiteral: 420177_22284).fødselsdato, "1977-01-02")
+    XCTAssertEqual(Norway.Fødselsnummer(integerLiteral: 520914_23480).fødselsdato, "2014-09-12")
+    XCTAssertEqual(Norway.Fødselsnummer(integerLiteral: 224177_72158).fødselsdato, "1977-01-22")
+    XCTAssertNil(Norway.Fødselsnummer(integerLiteral: 987654_32103).fødselsdato)
+  }
+
 }
