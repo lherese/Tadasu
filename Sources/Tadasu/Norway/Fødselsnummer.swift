@@ -40,6 +40,29 @@ extension Norway {
 
 }
 
+public extension Norway.Fødselsnummer {
+
+  enum Registertype {
+    case fødselsnummer
+    case D_nummer
+    case H_nummer
+    case FH_nummer
+  }
+
+  var registertype: Registertype {
+    if (4...7).contains(self[1]) {
+      return .D_nummer
+    } else if (4...5).contains(self[3]) {
+      return .H_nummer
+    } else if (8...9).contains(self[1]) {
+      return .FH_nummer
+    } else {
+      return .fødselsnummer
+    }
+  }
+
+}
+
 extension Norway.Fødselsnummer: LosslessStringConvertible {
 
   public var description: String {

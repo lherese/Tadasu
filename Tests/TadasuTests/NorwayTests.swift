@@ -39,4 +39,11 @@ final class FødselsnummerTests: XCTestCase {
     XCTAssertEqual(Norway.Fødselsnummer(integerLiteral: 230197_64966).kjønn,   .mann)
   }
 
+  func testRegistertype() {
+    XCTAssertEqual(Norway.Fødselsnummer(integerLiteral: 220177_72175).registertype, .fødselsnummer)
+    XCTAssertEqual(Norway.Fødselsnummer(integerLiteral: 420177_22284).registertype,      .D_nummer)
+    XCTAssertEqual(Norway.Fødselsnummer(integerLiteral: 224177_72158).registertype,      .H_nummer)
+    XCTAssertEqual(Norway.Fødselsnummer(integerLiteral: 987654_32103).registertype,     .FH_nummer)
+  }
+
 }
