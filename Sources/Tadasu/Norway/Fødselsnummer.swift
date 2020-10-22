@@ -20,8 +20,18 @@ extension Norway {
       return MOD11(value, weights: [2, 3, 4, 5, 6, 7]) && MOD11(value.prefix(10), weights: [2, 5, 4, 9, 8, 1, 6, 7, 3])
     }
 
+    subscript(_ index: Int) -> Int {
+      guard
+        (1...11).contains(index)
+      else {
+        preconditionFailure("Invalid index")
+      }
+
+      return value[value.index(value.startIndex, offsetBy: index - 1)].wholeNumberValue!
+    }
+
     public var kjønn: Kjønn {
-      value[value.index(value.startIndex, offsetBy: 8)].wholeNumberValue! % 2 == 0
+      self[9] % 2 == 0
         ? .kvinne
         :   .mann
     }
