@@ -11,6 +11,15 @@ extension Norway {
 
     let value: String
 
+    let weights = (
+      inner: [
+        2, 5, 4, 9, 8, 1, 6, 7, 3
+      ],
+      outer: [
+        2, 3, 4, 5, 6, 7
+      ]
+    )
+
     var isValid: Bool {
       guard
         value.count == 11,
@@ -19,7 +28,7 @@ extension Norway {
         return false
       }
 
-      return MOD11(value, weights: [2, 3, 4, 5, 6, 7]) && MOD11(value.prefix(10), weights: [2, 5, 4, 9, 8, 1, 6, 7, 3])
+      return MOD11(value, weights: weights.outer) && MOD11(value.prefix(10), weights: weights.inner)
     }
 
     subscript(_ index: Int) -> Int {
