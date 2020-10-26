@@ -22,34 +22,6 @@ extension Norway {
       ]
     )
 
-    subscript(_ index: Int) -> Character {
-      guard
-        (1...11).contains(index)
-      else {
-        preconditionFailure("Invalid index")
-      }
-
-      return value[value.index(value.startIndex, offsetBy: index - 1)]
-    }
-
-    subscript(_ index: Int) -> Int {
-      self[index].wholeNumberValue!
-    }
-
-    subscript(range: ClosedRange<Int>) -> String {
-      range
-        .map {
-          self[$0]
-        }
-        .reduce(into: "") { string, i in
-          string.append(i)
-        }
-    }
-
-    subscript(range: ClosedRange<Int>) -> Int {
-      Int(self[range])!
-    }
-
     public var kjønn: Kjønn {
       self[9] % 2 == 0
         ? .kvinne
@@ -105,8 +77,8 @@ extension Norway.Fødselsnummer {
     self[5...6]
   }
 
-  public var personnummer: Int {
-    self[7...9]
+  public var personnummer: String {
+    self[7...11]
   }
 
   public struct Serie: Equatable {
@@ -137,7 +109,7 @@ extension Norway.Fødselsnummer {
       let century = (s.years.first! / 100) * 100
       let year = century + self.year
 
-      if s.years.contains(year) && s.values.contains(personnummer) {
+      if s.years.contains(year) && s.values.contains(Int(personnummer.prefix(3))!) {
         return s
       }
     }

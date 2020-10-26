@@ -9,6 +9,12 @@ protocol DigitString: Codable, Hashable, ExpressibleByIntegerLiteral, LosslessSt
 
   init(value: String)
 
+  subscript(index: Int) -> Int { get }
+  subscript(index: Int) -> Character { get }
+
+  subscript(range: ClosedRange<Int>) -> Int { get }
+  subscript(range: ClosedRange<Int>) -> String { get }
+
 }
 
 extension DigitString {
@@ -58,6 +64,38 @@ extension DigitString {
     else {
       return nil
     }
+  }
+
+}
+
+extension DigitString {
+
+  subscript(_ index: Int) -> Character {
+    guard
+      (1...Self.count).contains(index)
+    else {
+      preconditionFailure("Invalid index")
+    }
+
+    return value[value.index(value.startIndex, offsetBy: index - 1)]
+  }
+
+  subscript(_ index: Int) -> Int {
+    self[index].wholeNumberValue!
+  }
+
+  subscript(range: ClosedRange<Int>) -> String {
+    range
+      .map {
+        self[$0]
+      }
+      .reduce(into: "") { string, i in
+        string.append(i)
+      }
+  }
+
+  subscript(range: ClosedRange<Int>) -> Int {
+    Int(self[range])!
   }
 
 }

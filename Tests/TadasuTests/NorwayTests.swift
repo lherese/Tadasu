@@ -50,7 +50,7 @@ final class FødselsnummerTests: XCTestCase {
   }
 
   func testPersonnummer() {
-    XCTAssertEqual(Norway.Fødselsnummer(integerLiteral: 220177_72175).personnummer, 721)
+    XCTAssertEqual(Norway.Fødselsnummer(integerLiteral: 220177_72175).personnummer, "72175")
   }
 
   func testDate() {
