@@ -7,7 +7,7 @@ extension Norway {
     case kvinne
   }
 
-  public struct Fødselsnummer {
+  public struct Fødselsnummer: Codable, Equatable, Hashable {
 
     let value: String
 
