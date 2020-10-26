@@ -1,23 +1,14 @@
 extension Norway {
 
-  public struct Kontonummer: Codable, Equatable, Hashable {
+  public struct Kontonummer: MOD11DigitString {
 
     let value: String
+
+    static let count = 11
 
     static let weights = [
       2, 3, 4, 5, 6, 7
     ]
-
-    var isValid: Bool {
-      guard
-        value.count == 11,
-        value.allSatisfy({ $0.isWholeNumber })
-      else {
-        return false
-      }
-
-      return MOD11(value, weights: Self.weights)
-    }
 
     @available(macOS 10.15, *)
     public var bankregisternummer: some StringProtocol {
@@ -32,30 +23,6 @@ extension Norway {
     @available(macOS 10.15, *)
     public var kundekontonummer: some StringProtocol {
       value.suffix(5).prefix(4)
-    }
-
-    public init?(bankregisternummer: Int, kontogruppe: Int, kundekontonummer: Int) {
-      guard
-        (0000...9999).contains(bankregisternummer),
-        (  00...99  ).contains(kontogruppe),
-        (0000...9999).contains(kundekontonummer)
-      else {
-        return nil
-      }
-
-      let digitString = [
-        String(bankregisternummer).padding(toLength: 4, withString: "0"),
-        String(kontogruppe)       .padding(toLength: 2, withString: "0"),
-        String(kundekontonummer)  .padding(toLength: 4, withString: "0"),
-      ].reduce("", +)
-
-      self.value = MOD11(digitString, weights: Self.weights)
-
-      guard
-        isValid
-      else {
-        return nil
-      }
     }
 
     @available(macOS 10.15, *)
@@ -79,24 +46,24 @@ extension Norway {
 
 }
 
-extension Norway.Kontonummer: LosslessStringConvertible {
+extension Norway.Kontonummer {
 
-  public var description: String {
-    value.prefix(4) + "." + value.prefix(6).suffix(2) + "." + value.suffix(5)
-  }
+  public init?(bankregisternummer: Int, kontogruppe: Int, kundekontonummer: Int) {
+    guard
+      (0000...9999).contains(bankregisternummer),
+      (  00...99  ).contains(kontogruppe),
+      (0000...9999).contains(kundekontonummer)
+    else {
+      return nil
+    }
 
-  public init?<T: StringProtocol>(_ value: T) {
-    self.value = value
-      .filter {
-        !$0.isWhitespace && !$0.isPunctuation
-      }
-      .reduce(into: "") { string, char in
-        if let nValue = char.wholeNumberValue {
-          string.append(String(nValue))
-        } else {
-          string.append(char)
-        }
-      }
+    let digitString = [
+      String(bankregisternummer).padding(toLength: 4, withString: "0"),
+      String(kontogruppe)       .padding(toLength: 2, withString: "0"),
+      String(kundekontonummer)  .padding(toLength: 4, withString: "0"),
+    ].reduce("", +)
+
+    self.value = MOD11(digitString, weights: Self.weights)
 
     guard
       isValid
@@ -105,19 +72,8 @@ extension Norway.Kontonummer: LosslessStringConvertible {
     }
   }
 
-}
-
-extension Norway.Kontonummer: ExpressibleByIntegerLiteral {
-
-  public init(integerLiteral: UInt64) {
-    self.value = String(integerLiteral)
-      .padding(toLength: 11, withString: "0")
-
-    guard
-      isValid
-    else {
-      preconditionFailure("Kontonummer as integer literals must be valid")
-    }
+  public var description: String {
+    value.prefix(4) + "." + value.prefix(6).suffix(2) + "." + value.suffix(5)
   }
 
 }

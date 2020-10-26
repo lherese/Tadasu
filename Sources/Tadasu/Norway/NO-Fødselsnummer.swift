@@ -7,9 +7,11 @@ extension Norway {
     case kvinne
   }
 
-  public struct Fødselsnummer: Codable, Equatable, Hashable {
+  public struct Fødselsnummer: MOD11DigitString {
 
     let value: String
+
+    static let count = 11
 
     static let weights = (
       inner: [
@@ -19,17 +21,6 @@ extension Norway {
         2, 3, 4, 5, 6, 7
       ]
     )
-
-    var isValid: Bool {
-      guard
-        value.count == 11,
-        value.allSatisfy({ $0.isWholeNumber })
-      else {
-        return false
-      }
-
-      return MOD11(value, weights: Self.weights.outer) && MOD11(value.prefix(10), weights: Self.weights.inner)
-    }
 
     subscript(_ index: Int) -> Int {
       guard
@@ -213,47 +204,8 @@ extension Norway.Fødselsnummer {
     }
   }
 
-}
-
-extension Norway.Fødselsnummer: LosslessStringConvertible {
-
   public var description: String {
     value.prefix(6) + " " + value.suffix(5)
-  }
-
-  public init?<T: StringProtocol>(_ value: T) {
-    self.value = value
-      .filter {
-        !$0.isWhitespace
-      }
-      .reduce(into: "") { string, char in
-        if let nValue = char.wholeNumberValue {
-          string.append(String(nValue))
-        } else {
-          string.append(char)
-        }
-      }
-
-    guard
-      isValid
-    else {
-      return nil
-    }
-  }
-
-}
-
-extension Norway.Fødselsnummer: ExpressibleByIntegerLiteral {
-
-  public init(integerLiteral: UInt64) {
-    self.value = String(integerLiteral)
-      .padding(toLength: 11, withString: "0")
-
-    guard
-      isValid
-    else {
-      preconditionFailure("Fødselsnummer as integer literals must be valid")
-    }
   }
 
 }
