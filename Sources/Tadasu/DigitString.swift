@@ -87,9 +87,15 @@ extension DigitString {
   }
 
   subscript(range: ClosedRange<Int>) -> String? {
-    range
-      .map {
-        self[$0]!
+    guard
+      range.last! <= value.count
+    else {
+      return nil
+    }
+
+    return range
+      .compactMap {
+        self[$0]
       }
       .reduce(into: "") { string, i in
         string.append(i)
@@ -97,7 +103,10 @@ extension DigitString {
   }
 
   subscript(range: ClosedRange<Int>) -> Int? {
-    Int(self[range]!)!
+    self[range]
+      .flatMap {
+        Int($0)
+      }
   }
 
 }

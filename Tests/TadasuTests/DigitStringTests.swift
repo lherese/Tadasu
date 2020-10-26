@@ -19,6 +19,9 @@ final class DigitStringTests: XCTestCase {
     XCTAssertEqual(digitString[1...2], "23")
     XCTAssertEqual(digitString[4],       5 )
     XCTAssertEqual(digitString[4],      "5")
+
+    XCTAssertEqual(digitString[10], Int?(nil))
+    XCTAssertEqual(digitString[4...10], Int?(nil))
   }
 
   func testStringConvertible() {
