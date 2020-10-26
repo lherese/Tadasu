@@ -1,4 +1,4 @@
-protocol MOD11DigitString: DigitString {
+protocol MOD11DigitString: FixedDigitString {
 
   associatedtype WeightsType
 

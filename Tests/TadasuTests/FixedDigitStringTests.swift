@@ -2,9 +2,9 @@ import XCTest
 
 @testable import Tadasu
 
-final class DigitStringTests: XCTestCase {
+final class FixedDigitStringTests: XCTestCase {
 
-  struct TestDigitString: DigitString {
+  struct TestDigitString: FixedDigitString {
     let value: String
 
     static let count = 8
