@@ -19,6 +19,10 @@ protocol DigitString: Codable, Hashable, ExpressibleByIntegerLiteral, LosslessSt
 
 extension DigitString {
 
+  var isValid: Bool {
+    isValidDigitString
+  }
+
   var isValidDigitString: Bool {
     value.count == Self.count && value.allSatisfy(\.isWholeNumber)
   }
