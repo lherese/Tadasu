@@ -22,26 +22,32 @@ extension Norway {
       ]
     )
 
-    subscript(_ index: Int) -> Int {
+    subscript(_ index: Int) -> Character {
       guard
         (1...11).contains(index)
       else {
         preconditionFailure("Invalid index")
       }
 
-      return value[value.index(value.startIndex, offsetBy: index - 1)].wholeNumberValue!
+      return value[value.index(value.startIndex, offsetBy: index - 1)]
+    }
+
+    subscript(_ index: Int) -> Int {
+      self[index].wholeNumberValue!
+    }
+
+    subscript(range: ClosedRange<Int>) -> String {
+      range
+        .map {
+          self[$0]
+        }
+        .reduce(into: "") { string, i in
+          string.append(i)
+        }
     }
 
     subscript(range: ClosedRange<Int>) -> Int {
-      Int(
-        range
-          .map {
-            self[$0]
-          }
-          .reduce(into: "") { string, i in
-            string.append(String(i))
-          }
-      )!
+      Int(self[range])!
     }
 
     public var kjønn: Kjønn {
@@ -80,7 +86,7 @@ public extension Norway.Fødselsnummer {
 extension Norway.Fødselsnummer {
 
   var day: Int {
-    let day = self[1...2]
+    let day: Int = self[1...2]
 
     return day >= 40
       ? day - 40
@@ -88,7 +94,7 @@ extension Norway.Fødselsnummer {
   }
 
   var month: Int {
-    let month = self[3...4]
+    let month: Int = self[3...4]
 
     return month >= 40
       ? month - 40
