@@ -27,5 +27,11 @@ let package = Package(
         "Tadasu",
       ]
     ),
+    .testTarget(
+      name: "NorwayTests",
+      dependencies: [
+        "Tadasu",
+      ]
+    ),
   ]
 )
