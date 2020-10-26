@@ -24,6 +24,7 @@ extension KontonummerTests {
     //   `swift test --generate-linuxmain`
     // to regenerate.
     static let __allTests__KontonummerTests = [
+        ("testCheckdash", testCheckdash),
         ("testComponentInitialisation", testComponentInitialisation),
         ("testComponents", testComponents),
         ("testIntegerLiteral", testIntegerLiteral),

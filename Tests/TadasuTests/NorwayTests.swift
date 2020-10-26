@@ -25,9 +25,7 @@ final class FødselsnummerTests: XCTestCase {
   }
 
   func testLetters() {
-    let fnummer = Norway.Fødselsnummer("100201 3082a")
-
-    XCTAssertNil(fnummer)
+    XCTAssertNil(Norway.Fødselsnummer("100201 3082a"))
   }
 
   func testKjønn() {
@@ -98,9 +96,11 @@ final class KontonummerTests: XCTestCase {
   }
 
   func testLetters() {
-    let kontonr = Norway.Kontonummer("0100.55.0000a")
+    XCTAssertNil(Norway.Kontonummer("0100.55.0000a"))
+  }
 
-    XCTAssertNil(kontonr)
+  func testCheckdash() {
+    XCTAssertNil(Norway.Kontonummer("0100.55.0013-"))
   }
 
   func testComponents() {
