@@ -77,6 +77,10 @@ extension Norway.Fødselsnummer {
     self[5...6]
   }
 
+  var individnummer: Int {
+    self[7...9]
+  }
+
   public var personnummer: String {
     self[7...11]
   }
@@ -109,7 +113,7 @@ extension Norway.Fødselsnummer {
       let century = (s.years.first! / 100) * 100
       let year = century + self.year
 
-      if s.years.contains(year) && s.values.contains(Int(personnummer.prefix(3))!) {
+      if s.years.contains(year) && s.values.contains(individnummer) {
         return s
       }
     }
