@@ -10,6 +10,10 @@ extension FixedDigitString {
     value.count == Self.count && value.allSatisfy(\.isWholeNumber)
   }
 
+  static func expectedCount(forValue: UInt64) -> Int {
+    count
+  }
+
 }
 
 extension FixedDigitString {

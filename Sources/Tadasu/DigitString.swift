@@ -22,7 +22,7 @@ extension DigitString {
   }
 
   var isValidDigitString: Bool {
-    value.allSatisfy(\.isWholeNumber)
+    value.count != 0 && value.allSatisfy(\.isWholeNumber)
   }
 
 }
