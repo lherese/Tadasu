@@ -73,7 +73,7 @@ extension Norway.Kontonummer {
   }
 
   public var description: String {
-    value.prefix(4) + "." + value.prefix(6).suffix(2) + "." + value.suffix(5)
+    "\(value.prefix(4)).\(value.prefix(6).suffix(2)).\(value.suffix(5))"
   }
 
 }

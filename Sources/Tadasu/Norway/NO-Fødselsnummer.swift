@@ -187,7 +187,7 @@ extension Norway.Fødselsnummer {
   }
 
   public var description: String {
-    value.prefix(6) + " " + value.suffix(5)
+    "\(value.prefix(6)) \(value.suffix(5))"
   }
 
 }
