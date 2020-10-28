@@ -21,20 +21,10 @@ extension Norway {
     public let nummer: Nummer
     public let gyldig: Bool
 
-    static var tableURL: URL = {
-      #if DEBUG
-      let bundle = Bundle(url: URL(fileURLWithPath: "\(NSString(#filePath).deletingLastPathComponent)/../../../.build/debug/Tadasu_Tadasu.bundle"))!
-      #else
-      let bundle = Bundle.module
-      #endif
-
-      return bundle.url(forResource: "NO-fylker", withExtension: "json")!
-    }()
-
     public static var alle: Set<Self> = {
       try! JSONDecoder().decode(
         Set<Self>.self,
-        from: Data(contentsOf: tableURL)
+        from: Data(contentsOf: Tadasu.bundle.url(forResource: "NO-fylker", withExtension: "json")!)
       )
     }()
 

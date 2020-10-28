@@ -1,3 +1,13 @@
+import Foundation
+
 struct Tadasu {
-  var text = "Hello, World!"
+
+  static var bundle: Bundle = {
+    #if DEBUG
+    return Bundle(url: URL(fileURLWithPath: "\(NSString(#filePath).deletingLastPathComponent)/../../.build/debug/Tadasu_Tadasu.bundle"))!
+    #else
+    return Bundle.module
+    #endif
+  }()
+
 }
