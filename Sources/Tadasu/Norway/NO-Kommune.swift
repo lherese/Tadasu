@@ -2,16 +2,21 @@ import Foundation
 
 extension Norway {
 
-  public struct Fylke: Codable, Hashable {
+  public struct Kommune: Codable, Hashable {
 
     public struct Nummer: FixedDigitString {
 
       let value: String
 
-      static let count = 2
+      static let count = 4
+
+      public var fylkesnummer: String {
+        self[1...2]
+      }
 
       var isValid: Bool {
-        isValidDigitString && Fylke.alle.map(\.nummer).contains(self)
+        isValidDigitString
+          && Kommune.alle.map(\.nummer).contains(self)
       }
 
     }
@@ -28,7 +33,7 @@ extension Norway {
       let bundle = Bundle.module
       #endif
 
-      return bundle.url(forResource: "NO-fylker", withExtension: "json")!
+      return bundle.url(forResource: "NO-kommuner", withExtension: "json")!
     }()
 
     public static var alle: Set<Self> = {
