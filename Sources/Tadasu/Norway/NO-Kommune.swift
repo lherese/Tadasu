@@ -2,6 +2,8 @@ import Foundation
 
 extension Norway {
 
+  public typealias Kommunenummer = Kommune.Nummer
+
   public struct Kommune: Codable, Hashable {
 
     public struct Nummer: FixedDigitString {
