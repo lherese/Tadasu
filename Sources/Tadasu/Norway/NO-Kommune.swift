@@ -10,8 +10,12 @@ extension Norway {
 
       static let count = 4
 
-      public var fylkesnummer: String {
-        self[1...2]
+      public var fylkesnummer: Fylke.Nummer {
+        Fylke.Nummer(value: self[1...2])
+      }
+
+      public var løpenummer: Int {
+        self[3...4]
       }
 
       var isValid: Bool {
@@ -59,6 +63,10 @@ extension Norway {
 
     public static func med(navn: String) -> Self? {
       alle.first { $0.navn.contains(navn) }
+    }
+
+    public var fylke: Fylke {
+      Fylke.med(nummer: nummer.fylkesnummer)!
     }
 
   }

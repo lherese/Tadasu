@@ -43,17 +43,19 @@ extension Norway {
     }()
 
     public static func med(nummer: String) -> Self? {
-      guard
-        let nummer = Nummer(nummer)
-      else {
-        return nil
-      }
-
-      return alle.first { $0.nummer == nummer }
+      Nummer(nummer).flatMap { med(nummer: $0) }
     }
 
     public static func med(navn: String) -> Self? {
       alle.first { $0.navn.contains(navn) }
+    }
+
+    public static func med(nummer: Nummer) -> Self? {
+      alle.first { $0.nummer == nummer }
+    }
+
+    public var kommuner: Set<Kommune> {
+      Kommune.alle.filter { $0.nummer.fylkesnummer == self.nummer }
     }
 
   }

@@ -24,4 +24,8 @@ final class FylkeTests: XCTestCase {
     XCTAssertEqual(Norway.Fylke.med(navn: "Akershus")?.gyldig, false)
   }
 
+  func testAssociation() {
+    XCTAssertEqual(Norway.Fylke.med(navn: "Oslo")?.kommuner.count, 1)
+  }
+
 }

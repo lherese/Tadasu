@@ -19,4 +19,8 @@ final class KommuneTests: XCTestCase {
     XCTAssertNil(Norway.Kommune.med(navn: "Ikkekommune"))
   }
 
+  func testAssociation() {
+    XCTAssertEqual(Norway.Fylke.med(navn: "Viken"), Norway.Kommune.med(navn: "Ås")?.fylke)
+  }
+
 }
