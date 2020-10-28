@@ -44,21 +44,19 @@ extension Norway {
     }()
 
     public static func med(nummer: String) -> Self? {
-      guard
-        let nummer = Nummer(nummer)
-      else {
-        return nil
-      }
-
-      return alle.first { $0.nummer == nummer }
+      Nummer(nummer).map { med(nummer: $0) }
     }
 
     public static func med(navn: String) -> Self? {
       alle.first { $0.navn.contains(navn) }
     }
 
+    public static func med(nummer: Nummer) -> Self {
+      alle.first { $0.nummer == nummer }!
+    }
+
     public var fylke: Fylke {
-      Fylke.med(nummer: nummer.fylkesnummer)!
+      Fylke.med(nummer: nummer.fylkesnummer)
     }
 
   }

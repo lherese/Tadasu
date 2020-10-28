@@ -35,15 +35,15 @@ extension Norway {
     }()
 
     public static func med(nummer: String) -> Self? {
-      Nummer(nummer).flatMap { med(nummer: $0) }
+      Nummer(nummer).map { med(nummer: $0) }
     }
 
     public static func med(navn: String) -> Self? {
       alle.first { $0.navn.contains(navn) }
     }
 
-    public static func med(nummer: Nummer) -> Self? {
-      alle.first { $0.nummer == nummer }
+    public static func med(nummer: Nummer) -> Self {
+      alle.first { $0.nummer == nummer }!
     }
 
     public var kommuner: Set<Kommune> {
