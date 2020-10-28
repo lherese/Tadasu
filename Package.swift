@@ -19,6 +19,9 @@ let package = Package(
     .target(
       name: "Tadasu",
       dependencies: [
+      ],
+      resources: [
+        .process("Resources"),
       ]
     ),
     .testTarget(
