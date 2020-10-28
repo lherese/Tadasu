@@ -29,6 +29,17 @@ extension DigitString {
 
 extension DigitString {
 
+  public init(from decoder: Decoder) throws {
+    self.init(value: try decoder.singleValueContainer().decode(String.self))
+  }
+
+  public func encode(to encoder: Encoder) throws {
+    try self.value.encode(to: encoder)
+  }
+}
+
+extension DigitString {
+
   public init(integerLiteral: UInt64) {
     self.init(value: String(integerLiteral))
 
